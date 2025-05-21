@@ -2,78 +2,82 @@ import React, { useState } from 'react';
 import './login-style.css';
 import GradCapIcon from '../assets/login/login_grad_cap.svg';
 import { Eye, EyeOff } from 'lucide-react';
-import { useNavigate } from 'react-router-dom'; // for redirecting after login
+import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import { AuthContext } from '../AuthContext';
+import { useContext } from 'react';
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState('');
   const navigate = useNavigate();
+  const { login } = useContext(AuthContext);
 
   const validateInputs = () => {
     if (!email || !password) {
-      toast.error('Please fill in both email and password.', { duration: 2000 });
+      toast.error('Please fill in both email and password.');
       return false;
     }
     if (!email.includes('@')) {
-      toast.error('Email must include "@" symbol.', { duration: 2000 });
+      toast.error('Please enter a valid email address.');
       return false;
     }
     if (password.length < 8) {
-      toast.error('Password must be at least 8 characters.', { duration: 2000 });
+      toast.error('Password must be at least 8 characters.');
       return false;
     }
     return true;
   };
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  setError('');
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  if (!validateInputs()) return;
+    if (!validateInputs()) return;
 
-  setLoading(true);
+    setLoading(true);
 
-  try {
-    const response = await fetch('http://localhost:5000/api/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password }),
-    });
+    try {
+      const response = await fetch('http://localhost:5000/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
 
-    const data = await response.json();
+      const data = await response.json();
 
-    if (response.ok) {
-      toast.success('Login Successful!', { duration: 2000 }   )
-      const userRole = data.role;
-
-      // Navigate based on role
-      switch (userRole) {
-        case 'student':
-          navigate('/student/dashboard');
-          break;
-        case 'admin':
-          navigate('/admin/dashboard');
-          break;
-        case 'instructor':
-          navigate('/instructor/dashboard');
-          break;
-        default:
-          alert('Unknown role. Please contact support.');
+      if (response.ok) {
+        const { token, role, user } = data;
+        
+        // Use the login function from AuthContext
+        login(token, user);
+        
+        toast.success('Login successful!');
+        
+        // Navigate based on role
+        switch (role) {
+          case 'student':
+            navigate('/student/dashboard');
+            break;
+          case 'admin':
+            navigate('/admin/dashboard');
+            break;
+          case 'instructor':
+            navigate('/instructor/dashboard');
+            break;
+          default:
+            toast.error('Unknown user role. Please contact support.');
+        }
+      } else {
+        toast.error(data.message || 'Login failed. Please try again.');
       }
-    } else {
-      toast.error(data.message || 'Login failed.');
+    } catch (err) {
+      toast.error('Network error. Please check your connection.');
+    } finally {
+      setLoading(false);
     }
-  } catch (err) {
-    toast.error('Something went wrong. Please try again.');
-  } finally {
-    setLoading(false);
-  }
-};
-
+  };
 
   return (
     <div className="login-container">
@@ -90,10 +94,8 @@ const handleSubmit = async (e) => {
 
           <div className="login-card">
             <div className="login-content">
-              <h2 className="login-title">Login</h2>
-              <p className="login-subtitle">
-                Prepare yourself for a future full of stars
-              </p>
+              <h2 className="login-title">Welcome Back</h2>
+              <p className="login-subtitle">Please sign in to your account</p>
 
               <form onSubmit={handleSubmit} className="login-form">
                 <div className="form-group">
@@ -109,7 +111,7 @@ const handleSubmit = async (e) => {
 
                 <div className="form-group password-group">
                   <input
-                    type={showPassword ? "text" : "password"}
+                    type={showPassword ? 'text' : 'password'}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Password"
@@ -126,16 +128,8 @@ const handleSubmit = async (e) => {
                   </button>
                 </div>
 
-
-                {/* Error Message */}
-                {error && <p className="error-message">{error}</p>}
-
-                <button
-                  type="submit"
-                  className="login-button"
-                  disabled={loading}
-                >
-                  {loading ? <div className="spinner"></div> : 'LOGIN'}
+                <button type="submit" className="login-button" disabled={loading}>
+                  {loading ? <div className="spinner"></div> : 'Sign in'}
                 </button>
               </form>
             </div>
