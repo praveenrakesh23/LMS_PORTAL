@@ -3,6 +3,7 @@ import './login-style.css';
 import GradCapIcon from '../assets/login/login_grad_cap.svg';
 import { Eye, EyeOff } from 'lucide-react';
 import { useNavigate } from 'react-router-dom'; // for redirecting after login
+import toast from 'react-hot-toast';
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -14,51 +15,65 @@ function Login() {
 
   const validateInputs = () => {
     if (!email || !password) {
-      alert('Please fill in both email and password.');
+      toast.error('Please fill in both email and password.', { duration: 2000 });
       return false;
     }
     if (!email.includes('@')) {
-      alert('Email must include "@" symbol.');
+      toast.error('Email must include "@" symbol.', { duration: 2000 });
       return false;
     }
     if (password.length < 8) {
-      alert('Password must be at least 8 characters.');
+      toast.error('Password must be at least 8 characters.', { duration: 2000 });
       return false;
     }
     return true;
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError('');
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setError('');
 
-    if (!validateInputs()) return;
+  if (!validateInputs()) return;
 
-    setLoading(true);
+  setLoading(true);
 
-    try {
-      // Replace the below dummy URL with your real backend API endpoint
-      const response = await fetch('http://localhost:5000/api/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
-      });
+  try {
+    const response = await fetch('http://localhost:5000/api/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password }),
+    });
 
-      const data = await response.json();
+    const data = await response.json();
 
-      if (response.ok) {
-        // Login success: Redirect to dashboard
-        navigate('/dashboard');
-      } else {
-        // Login failed: show error from backend
-        alert(data.message || 'Login failed.');
+    if (response.ok) {
+      toast.success('Login Successful!', { duration: 2000 }   )
+      const userRole = data.role;
+
+      // Navigate based on role
+      switch (userRole) {
+        case 'student':
+          navigate('/student/dashboard');
+          break;
+        case 'admin':
+          navigate('/admin/dashboard');
+          break;
+        case 'instructor':
+          navigate('/instructor/dashboard');
+          break;
+        default:
+          alert('Unknown role. Please contact support.');
       }
-    } catch (err) {
-      alert('Something went wrong. Please try again.');
-    } finally {
-      setLoading(false);
+    } else {
+      toast.error(data.message || 'Login failed.');
     }
-  };
+  } catch (err) {
+    toast.error('Something went wrong. Please try again.');
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   return (
     <div className="login-container">
@@ -110,6 +125,7 @@ function Login() {
                     {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                   </button>
                 </div>
+
 
                 {/* Error Message */}
                 {error && <p className="error-message">{error}</p>}
