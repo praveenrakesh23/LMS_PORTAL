@@ -29,7 +29,15 @@ public class AuthController {
         User user = authService.authenticateUser(email, password);
         if (user != null) {
             String token = jwtUtil.generateToken(email);
-            return ResponseEntity.ok(Map.of("token", token, "role", user.getRoles()));
+            Map<String, Object> userInfo = Map.of(
+                "id", user.getId(),
+                "email", user.getEmail(),
+                "role", user.getRoles() // or extract role names if needed
+            );
+            return ResponseEntity.ok(Map.of(
+                "token", token,
+                "user", userInfo
+            ));
         }
         return ResponseEntity.status(401).body("Invalid credentials");
     }
