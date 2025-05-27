@@ -39,7 +39,8 @@ function Login() {
     setLoading(true);
 
     try {
-      const response = await fetch('http://localhost:5000/api/login', {
+      // waiting for the response form AuthController.java
+      const response = await fetch('http://localhost:5000/api/login', {  
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
