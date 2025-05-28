@@ -1,0 +1,224 @@
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@700&family=Poppins:wght@400;600;700&display=swap');
+
+.login-container {
+  width: 100vw;   /* Full viewport width */
+  height: 100vh;  /* Full viewport height */
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center; /* if you want vertical centering */
+}
+
+.login-background {
+  width: 100%;
+  height: 100%;
+  background-image: url('../assets/login/login_page_bg.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+
+
+.login-wrapper {
+  max-width: 100vw; /* or just remove max-width */
+  width: 100vw;     /* full viewport width */
+  height: 100vh;    /* full viewport height if you want full screen */
+  position: relative;
+}
+
+
+.login-background {
+  position: relative;
+  height: 900px;
+  background-color: #f0f0f0;
+}
+
+.gradient-overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: linear-gradient(270deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.4) 57%);
+  opacity: 0.84;
+}
+
+.logo-section {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  top: 395px;
+  left: 173px;
+}
+
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.logo-icon {
+  width: 64px;
+  height: 64px;
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+}
+
+.logo-text {
+  font-family: 'Archivo', Helvetica;
+  font-weight: 700;
+  color: white;
+  font-size: 64px;
+  line-height: 84px;
+}
+
+.login-card {
+  position: absolute;
+  width: 576px;
+  height: 533px;
+  top: 200px;
+  left: 695px;
+  background-color: #54aee9;
+  border-radius: 10px;
+  box-shadow: 10px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.login-content {
+  padding: 48px;
+}
+
+.login-title {
+  font-family: 'Poppins', Helvetica;
+  font-weight: 600;
+  color: white;
+  font-size: 28px;
+  letter-spacing: 0.14px;
+  line-height: 47.6px;
+  margin-bottom: 16px;
+}
+
+.login-subtitle {
+  font-family: 'Poppins', Helvetica;
+  color: #F4F6FC;
+  margin-bottom: 40px;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-group {
+  position: relative;
+}
+
+.login-input {
+  width: 432px;
+  height: 64px;
+  border-radius: 8px;
+  border: 1.5px solid white;
+  background-color: transparent;
+  color: white;
+  padding: 0 16px;
+  font-family: 'Poppins', Helvetica;
+  font-size: 16px;
+}
+
+.login-input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.login-button {
+  width: 465px;
+  height: 64px;
+  background-color: #fcd980;
+  color: #282938;
+  border: none;
+  border-radius: 5px;
+  font-family: 'Poppins', Helvetica;
+  font-weight: 700;
+  font-size: 18px;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: background-color 0.2s, transform 0.1s ease, box-shadow 0.2s ease;
+}
+
+
+.login-button:hover {
+  background-color: rgba(252, 217, 128, 0.9);
+  box-shadow: 0 4px 12px rgba(252, 217, 128, 0.6);
+}
+
+.login-input:focus {
+  outline: none; /* remove default blue/black outline */
+  border-color: #fcd980; /* your button's yellow-ish color, or pick any suitable color */
+  box-shadow: 0 0 5px #fcd980; /* optional: subtle glow effect */
+}
+
+.login-button:focus {
+  outline: 2px solid #fcd980;        /* warm yellow matching button color */
+  outline-offset: 3px;               /* gives breathing space */
+  box-shadow: 0 0 8px 2px rgba(252, 217, 128, 0.4); /* soft glowing halo */
+  transition: box-shadow 0.3s ease;  /* smooth effect */
+}
+
+
+/* Active (clicked) effect */
+.login-button:active {
+  transform: scale(0.96);
+  box-shadow: 0 2px 6px rgba(252, 217, 128, 0.8);
+}
+
+.spinner {
+  border: 4px solid rgba(252, 217, 128, 0.3); /* light gold background */
+  border-top: 4px solid #1ca8dbb1; /* solid gold for the moving part */
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  animation: spin 1s linear infinite;
+  margin: 0 auto; /* center inside button */
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.form-group.password-group {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+
+.toggle-password {
+  position: absolute;
+  right: 35px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+  padding: 0;
+  z-index: 2; /* Ensure it is above the input */
+}
+
+
+.toggle-password:hover {
+  opacity: 0.8;
+}
+
+.password-group .login-input {
+  width: calc(93% - 40px); /* Leave space for the icon */
+  padding-right: 40px; /* Prevent text from overlapping icon */
+}
