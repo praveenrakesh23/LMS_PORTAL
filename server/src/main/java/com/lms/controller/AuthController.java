@@ -27,9 +27,23 @@ public class AuthController {
         String email = loginData.get("email");
         String password = loginData.get("password");
         User user = authService.authenticateUser(email, password);
+
         if (user != null) {
             String token = jwtUtil.generateToken(email);
-            return ResponseEntity.ok(Map.of("token", token, "role", user.getRoles()));
+
+            // Assuming each user has only one role
+            String role = user.getRoles().stream().findFirst().get().getName();
+
+            return ResponseEntity.ok(Map.of(
+                    "message", "Login successful",
+                    "token", token,
+                    "role", role,
+                    "user", Map.of(
+                            "id", user.getId(),
+                            "email", user.getEmail(),
+                            "name", user.getName()
+                    )
+            ));
         }
         return ResponseEntity.status(401).body("Invalid credentials");
     }
@@ -40,6 +54,7 @@ public class AuthController {
             authService.registerUser(
                 registrationData.get("email"),
                 registrationData.get("password"),
+                registrationData.get("name"),
                 registrationData.get("role")
             );
             return ResponseEntity.ok("User registered successfully");

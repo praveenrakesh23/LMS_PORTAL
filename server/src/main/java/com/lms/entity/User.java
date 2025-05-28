@@ -16,6 +16,9 @@ public class User {
     @Column(nullable = false)
     private String password;
 
+    @Column(nullable = false) // Add the name field
+    private String name;
+
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -27,9 +30,10 @@ public class User {
     }
 
     // Parameterized constructor
-    public User(String email, String password, Set<Role> roles) {
+    public User(String email, String password, String name, Set<Role> roles) {
         this.email = email;
         this.password = password;
+        this.name = name;
         this.roles = roles;
     }
 
@@ -58,6 +62,14 @@ public class User {
         this.password = password;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public Set<Role> getRoles() {
         return roles;
     }
@@ -71,6 +83,7 @@ public class User {
         return "User{" +
                 "id=" + id +
                 ", email='" + email + '\'' +
+                ", name='" + name + '\'' +
                 ", roles=" + roles +
                 '}';
     }

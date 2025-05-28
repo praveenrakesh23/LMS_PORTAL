@@ -34,7 +34,7 @@ public class AuthService {
         return null;
     }
 
-    public void registerUser(String email, String password, String roleName) throws Exception {
+    public void registerUser(String email, String password, String name, String roleName) throws Exception {
         if (userRepository.findByEmail(email).isPresent()) {
             throw new Exception("Email already registered.");
         }
@@ -50,6 +50,7 @@ public class AuthService {
         User user = new User();
         user.setEmail(email);
         user.setPassword(passwordEncoder.encode(password));
+        user.setName(name);
         user.setRoles(Set.of(role));
         userRepository.save(user);
     }
