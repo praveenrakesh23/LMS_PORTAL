@@ -1,4 +1,5 @@
 // App.jsx
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate  } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 
@@ -15,6 +16,8 @@ import GradesPage from './pages/student/GradesPage';
 import AnnouncementsPage from './pages/student/AnnouncementsPage';
 import AssignmentsPage from './pages/student/AssignmentsPage';
 import LessonPage from './pages/student/LessonPage';
+import MyPurchasesPage from './pages/student/MyPurchasesPage';
+import AccomplishmentsPage from './pages/student/AccomplishmentsPage';
 
 function App() {
   return (
@@ -50,6 +53,9 @@ function App() {
               </PrivateRoute>
             }
           />
+
+          <Route path="/student/MyPurchasesPage" element={<MyPurchasesPage />} />
+          <Route path="/student/accomplishments" element={<AccomplishmentsPage />} />
 
           {/* Catch all route for 404 */}
           <Route path="*" element={<NotFound />} />

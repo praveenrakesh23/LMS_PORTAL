@@ -1,0 +1,195 @@
+.mp-container {
+  max-width: 960px; /* Adjust max-width as needed, similar to course modules */
+  margin: 32px auto 0 auto; /* Center the container */
+  padding: 0 16px; /* Add some horizontal padding */
+}
+
+.mp-title {
+  font-size: 1.8rem; /* Adjust font size */
+  font-weight: 700;
+  margin-bottom: 24px;
+  color: #222; /* Dark gray color */
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* You can add a title bar similar to .cm-title-bar if desired */
+/*
+.mp-title-bar {
+  display: inline-block;
+  width: 5px;
+  height: 28px;
+  background: #2563eb;
+  border-radius: 3px;
+  margin-right: 10px;
+}
+*/
+
+.mp-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px; /* Space between cards */
+}
+
+.mp-card {
+  background: #fff;
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 2px 8px rgba(30,41,59,0.07); /* Subtle shadow */
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  /* Adjusted for responsiveness */
+}
+
+.mp-card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px; /* Space between sections on small screens */
+}
+
+.mp-card-details {
+  flex-grow: 1;
+}
+
+.mp-course-title {
+  font-size: 1.08rem;
+  font-weight: 600;
+  color: #222;
+  margin-bottom: 4px;
+}
+
+.mp-purchase-date {
+  font-size: 0.95rem;
+  color: #64748b;
+}
+
+.mp-card-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Align items to the start on small screens */
+  gap: 8px;
+}
+
+.mp-price {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #22c55e; /* Green color for price */
+}
+
+.mp-status {
+  font-size: 0.95rem;
+  color: #64748b;
+}
+
+.mp-link {
+  font-size: 0.95rem;
+  color: #2563eb; /* Blue color for link */
+  text-decoration: none;
+  margin-top: 4px;
+  transition: color 0.2s;
+}
+
+.mp-link:hover {
+  text-decoration: underline;
+  color: #1e40af; /* Darker blue on hover */
+}
+
+.mp-empty-state {
+  text-align: center;
+  color: #64748b;
+  font-size: 1.1rem;
+  padding: 40px 0;
+}
+
+/* Responsive adjustments for card layout */
+@media (min-width: 640px) { /* Equivalent to sm breakpoint */
+  .mp-card-content {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px; /* Space between sections on larger screens */
+  }
+  
+  .mp-card-meta {
+    align-items: flex-end; /* Align items to the end on larger screens */
+  }
+
+  .mp-link {
+    margin-top: 0;
+  }
+}
+
+/* Skeleton Loader Styling (basic) */
+.mp-skeleton {
+  width: 100%;
+  height: 80px; /* Adjust height */
+  background-color: #e2e8f0; /* Gray background */
+  border-radius: 10px; /* Rounded corners */
+  animation: loading 1.5s infinite linear;
+}
+
+@keyframes loading {
+  0% { opacity: 0.6; }
+  50% { opacity: 1; }
+  100% { opacity: 0.6; }
+}
+
+.mp-root {
+  min-height: 100vh;
+  background: #f7f7f7; /* Light gray background */
+}
+
+.mp-content-row {
+  display: flex;
+  max-width: 1200px; /* Match course modules max width */
+  margin: 32px auto 0 auto; /* Center the content below header */
+  gap: 32px; /* Space between back button area and main content */
+}
+
+.mp-back-button-container {
+  min-width: 220px; /* Allocate space similar to sidebar */
+  padding: 0 16px; /* Add padding */
+}
+
+.mp-back-button {
+  background: none;
+  border: none;
+  color: #64748b; /* Gray color */
+  font-size: 1rem;
+  cursor: pointer;
+  font-weight: 500;
+  padding: 0;
+  transition: color 0.2s;
+}
+
+.mp-back-button:hover {
+  color: #222; /* Darker gray on hover */
+}
+
+.mp-main {
+  flex: 1;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 12px #eee;
+  padding: 32px;
+  /* Adjust padding for smaller screens if needed */
+}
+
+/* Responsive adjustments for layout */
+@media (max-width: 900px) { /* Stack layout on smaller screens */
+  .mp-content-row {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .mp-back-button-container {
+    min-width: 0;
+    padding: 16px;
+    text-align: left; /* Align back button to the left */
+  }
+
+  .mp-main {
+    padding: 16px;
+  }
+} 

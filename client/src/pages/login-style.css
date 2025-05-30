@@ -1,13 +1,37 @@
 @import url('https://fonts.googleapis.com/css2?family=Archivo:wght@700&family=Poppins:wght@400;600;700&display=swap');
 
+/* Base styles */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+.login-wrapper .logo-text {
+  font-family: 'Archivo', Helvetica;
+  font-weight: 700;
+  color: rgb(255, 255, 255);
+  font-size: 64px;
+  line-height: 84px;
+}
+
 .login-container {
-  width: 100vw;   /* Full viewport width */
-  height: 100vh;  /* Full viewport height */
+  width: 100vw;
+  height: 100vh;
   margin: 0;
   padding: 0;
   display: flex;
   justify-content: center;
-  align-items: center; /* if you want vertical centering */
+  align-items: center;
+  overflow-x: hidden;
+}
+
+.login-wrapper {
+  width: 100%;
+  height: 100%;
+  position: relative;
 }
 
 .login-background {
@@ -17,22 +41,7 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-}
-
-
-
-.login-wrapper {
-  max-width: 100vw; /* or just remove max-width */
-  width: 100vw;     /* full viewport width */
-  height: 100vh;    /* full viewport height if you want full screen */
   position: relative;
-}
-
-
-.login-background {
-  position: relative;
-  height: 900px;
-  background-color: #f0f0f0;
 }
 
 .gradient-overlay {
@@ -43,6 +52,7 @@
   left: 0;
   background: linear-gradient(270deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.4) 57%);
   opacity: 0.84;
+  z-index: 1;
 }
 
 .logo-section {
@@ -50,22 +60,15 @@
   display: flex;
   align-items: center;
   gap: 24px;
-  top: 395px;
-  left: 173px;
-}
-
-
-html, body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  width: 100%;
+  top: 50%;
+  left: 25%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
 }
 
 .logo-icon {
   width: 64px;
   height: 64px;
-  
   display: flex;
   align-items: center;
   justify-content: center;
@@ -84,11 +87,13 @@ html, body {
   position: absolute;
   width: 576px;
   height: 533px;
-  top: 200px;
-  left: 695px;
+  top: 50%;
+  left: 75%;
+  transform: translate(-50%, -50%);
   background-color: #54aee9;
   border-radius: 10px;
   box-shadow: 10px 4px 4px rgba(0, 0, 0, 0.25);
+  z-index: 2;
 }
 
 .login-content {
@@ -122,7 +127,7 @@ html, body {
 }
 
 .login-input {
-  width: 432px;
+  width: 100%;
   height: 64px;
   border-radius: 8px;
   border: 1.5px solid white;
@@ -131,6 +136,7 @@ html, body {
   padding: 0 16px;
   font-family: 'Poppins', Helvetica;
   font-size: 16px;
+  box-sizing: border-box;
 }
 
 .login-input::placeholder {
@@ -138,7 +144,7 @@ html, body {
 }
 
 .login-button {
-  width: 465px;
+  width: 100%;
   height: 64px;
   background-color: #fcd980;
   color: #282938;
@@ -152,40 +158,37 @@ html, body {
   transition: background-color 0.2s, transform 0.1s ease, box-shadow 0.2s ease;
 }
 
-
 .login-button:hover {
   background-color: rgba(252, 217, 128, 0.9);
   box-shadow: 0 4px 12px rgba(252, 217, 128, 0.6);
 }
 
 .login-input:focus {
-  outline: none; /* remove default blue/black outline */
-  border-color: #fcd980; /* your button's yellow-ish color, or pick any suitable color */
-  box-shadow: 0 0 5px #fcd980; /* optional: subtle glow effect */
+  outline: none;
+  border-color: #fcd980;
+  box-shadow: 0 0 5px #fcd980;
 }
 
 .login-button:focus {
-  outline: 2px solid #fcd980;        /* warm yellow matching button color */
-  outline-offset: 3px;               /* gives breathing space */
-  box-shadow: 0 0 8px 2px rgba(252, 217, 128, 0.4); /* soft glowing halo */
-  transition: box-shadow 0.3s ease;  /* smooth effect */
+  outline: 2px solid #fcd980;
+  outline-offset: 3px;
+  box-shadow: 0 0 8px 2px rgba(252, 217, 128, 0.4);
+  transition: box-shadow 0.3s ease;
 }
 
-
-/* Active (clicked) effect */
 .login-button:active {
   transform: scale(0.96);
   box-shadow: 0 2px 6px rgba(252, 217, 128, 0.8);
 }
 
 .spinner {
-  border: 4px solid rgba(252, 217, 128, 0.3); /* light gold background */
-  border-top: 4px solid #1ca8dbb1; /* solid gold for the moving part */
+  border: 4px solid rgba(252, 217, 128, 0.3);
+  border-top: 4px solid #1ca8dbb1;
   border-radius: 50%;
   width: 24px;
   height: 24px;
   animation: spin 1s linear infinite;
-  margin: 0 auto; /* center inside button */
+  margin: 0 auto;
 }
 
 @keyframes spin {
@@ -199,10 +202,9 @@ html, body {
   align-items: center;
 }
 
-
 .toggle-password {
   position: absolute;
-  right: 35px;
+  right: 16px;
   top: 50%;
   transform: translateY(-50%);
   background: none;
@@ -210,15 +212,417 @@ html, body {
   color: #ffffff;
   cursor: pointer;
   padding: 0;
-  z-index: 2; /* Ensure it is above the input */
+  z-index: 2;
 }
-
 
 .toggle-password:hover {
   opacity: 0.8;
 }
 
-.password-group .login-input {
-  width: calc(93% - 40px); /* Leave space for the icon */
-  padding-right: 40px; /* Prevent text from overlapping icon */
+/* Media Queries for Responsive Design */
+
+/* Large devices (desktops, less than 1200px) */
+@media (max-width: 1199.98px) {
+  .login-card {
+    width: 500px;
+  }
+  
+  .login-wrapper .logo-text {
+    font-size: 56px;
+    line-height: 74px;
+  }
+}
+
+/* Medium devices (tablets, less than 992px) */
+@media (max-width: 991.98px) {
+  .login-card {
+    width: 450px;
+  }
+  
+  .login-wrapper .logo-text {
+    font-size: 48px;
+    line-height: 64px;
+  }
+  
+  .logo-icon {
+    width: 56px;
+    height: 56px;
+  }
+}
+
+/* Small devices (landscape phones, less than 768px) */
+@media (max-width: 767.98px) {
+  .login-card {
+    width: 90%;
+    max-width: 400px;
+  }
+  
+  .login-content {
+    padding: 32px;
+  }
+  
+  .login-wrapper .logo-text {
+    font-size: 40px;
+    line-height: 52px;
+  }
+  
+  .logo-icon {
+    width: 48px;
+    height: 48px;
+  }
+  
+  .login-title {
+    font-size: 24px;
+    line-height: 40px;
+  }
+}
+
+/* Extra small devices (portrait phones, less than 576px) */
+@media (max-width: 575.98px) {
+  .login-card {
+    width: 95%;
+    min-height: auto;
+  }
+  
+  .login-content {
+    padding: 24px;
+  }
+  
+  .login-wrapper .logo-text {
+    font-size: 32px;
+    line-height: 42px;
+  }
+  
+  .logo-icon {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .login-title {
+    font-size: 20px;
+    line-height: 34px;
+  }
+  
+  .login-subtitle {
+    font-size: 14px;
+    margin-bottom: 24px;
+  }
+  
+  .login-input {
+    height: 56px;
+    font-size: 14px;
+  }
+  
+  .login-button {
+    height: 56px;
+    font-size: 16px;
+  }
+}
+
+/* For very small devices (less than 360px) */
+@media (max-width: 359.98px) {
+  .login-content {
+    padding: 16px;
+  }
+  
+  .login-wrapper .logo-text {
+    font-size: 28px;
+    line-height: 36px;
+  }
+  
+  .logo-icon {
+    width: 32px;
+    height: 32px;
+  }
+  
+  .login-title {
+    font-size: 18px;
+    line-height: 30px;
+  }
+  
+  .login-subtitle {
+    font-size: 12px;
+    margin-bottom: 20px;
+  }
+  
+  .login-input {
+    height: 48px;
+    font-size: 12px;
+  }
+  
+  .login-button {
+    height: 48px;
+    font-size: 14px;
+  }
+}
+
+/* For devices with height less than 600px */
+@media (max-height: 599.98px) {
+  .login-card {
+    position: relative;
+    top: 0;
+    left: 0;
+    transform: none;
+    margin: 20px auto;
+  }
+  
+  .logo-section {
+    position: relative;
+    top: 0;
+    left: 0;
+    transform: none;
+    margin: 20px auto;
+  }
+}
+
+/* For devices with height less than 400px */
+@media (max-height: 399.98px) {
+  .login-content {
+    padding: 16px;
+  }
+  
+  .login-title {
+    font-size: 18px;
+    line-height: 30px;
+    margin-bottom: 8px;
+  }
+  
+  .login-subtitle {
+    font-size: 12px;
+    margin-bottom: 16px;
+  }
+  
+  .login-form {
+    gap: 12px;
+  }
+  
+  .login-input {
+    height: 40px;
+  }
+  
+  .login-button {
+    height: 40px;
+    margin-top: 12px;
+  }
+}
+
+/* Responsive Media Queries */
+@media (max-width: 1200px) {
+  .login-card {
+    width: 500px;
+    left: 70%;
+  }
+  
+  .logo-section {
+    left: 30%;
+  }
+}
+
+@media (max-width: 992px) {
+  .logo-section {
+    display: none;
+  }
+  
+  .login-card {
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+  .login-wrapper .logo-text {
+    font-size: 56px;
+    line-height: 74px;
+  }
+}
+
+@media (max-width: 768px) {
+  .login-card {
+    width: 400px;
+    left: 50%;
+  }
+  
+  .logo-section {
+    left: 50%;
+  }
+  
+  .login-wrapper .logo-text {
+    font-size: 48px;
+    line-height: 64px;
+  }
+  
+  .login-input {
+    width: 100%;
+    max-width: 432px;
+  }
+  
+  .login-button {
+    width: 100%;
+    max-width: 465px;
+  }
+}
+
+@media (max-width: 576px) {
+  .login-card {
+    width: 90%;
+    left: 50%;
+  }
+  
+  .logo-section {
+    top: 30%;
+    left: 50%;
+  }
+  
+  .login-wrapper .logo-text {
+    font-size: 40px;
+    line-height: 52px;
+  }
+  
+  .logo-icon {
+    width: 48px;
+    height: 48px;
+  }
+  
+  .login-title {
+    font-size: 24px;
+    line-height: 40px;
+  }
+  
+  .login-subtitle {
+    font-size: 14px;
+    margin-bottom: 24px;
+  }
+  
+  .login-input {
+    height: 56px;
+    font-size: 14px;
+  }
+  
+  .login-button {
+    height: 56px;
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 360px) {
+  .login-card {
+    width: 95%;
+  }
+  
+  .logo-section {
+    top: 25%;
+  }
+  
+  .login-wrapper .logo-text {
+    font-size: 32px;
+    line-height: 42px;
+  }
+  
+  .logo-icon {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .login-title {
+    font-size: 20px;
+    line-height: 34px;
+  }
+  
+  .login-subtitle {
+    font-size: 12px;
+    margin-bottom: 20px;
+  }
+  
+  .login-input {
+    height: 48px;
+    font-size: 12px;
+  }
+  
+  .login-button {
+    height: 48px;
+    font-size: 14px;
+  }
+}
+
+/* For devices with height less than 600px */
+@media (max-height: 600px) {
+  .login-card {
+    top: 50%;
+  }
+  
+  .logo-section {
+    top: 40%;
+  }
+  
+  .login-content {
+    padding: 24px;
+  }
+  
+  .login-title {
+    font-size: 24px;
+    line-height: 40px;
+    margin-bottom: 12px;
+  }
+  
+  .login-subtitle {
+    margin-bottom: 24px;
+  }
+  
+  .login-form {
+    gap: 16px;
+  }
+  
+  .login-input {
+    height: 48px;
+  }
+  
+  .login-button {
+    height: 48px;
+    margin-top: 16px;
+  }
+}
+
+/* For devices with height less than 400px */
+@media (max-height: 400px) {
+  .login-card {
+    position: relative;
+    top: 0;
+    left: 0;
+    transform: none;
+    margin: 20px auto;
+  }
+  
+  .logo-section {
+    position: relative;
+    top: 0;
+    left: 0;
+    transform: none;
+    margin: 20px auto;
+  }
+  
+  .login-content {
+    padding: 16px;
+  }
+  
+  .login-title {
+    font-size: 20px;
+    line-height: 34px;
+    margin-bottom: 8px;
+  }
+  
+  .login-subtitle {
+    font-size: 12px;
+    margin-bottom: 16px;
+  }
+  
+  .login-form {
+    gap: 12px;
+  }
+  
+  .login-input {
+    height: 40px;
+  }
+  
+  .login-button {
+    height: 40px;
+    margin-top: 12px;
+  }
 }

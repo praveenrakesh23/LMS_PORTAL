@@ -2,9 +2,28 @@ import React, { useContext } from 'react';
 import { AuthContext } from '../AuthContext';
 import './DashboardHeader.css';
 import gradcap from '../assets/dashboard/login_grad_cap.svg';
+import { useNavigate } from 'react-router-dom';
 
 const DashboardHeader = () => {
   const { user: currentUser, logout } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const handlePurchasesClick = () => {
+    navigate('/student/MyPurchasesPage');
+  };
+
+  const handleLogoutClick = () => {
+    const isConfirmed = window.confirm('Are you sure you want to log out?');
+
+    if (isConfirmed) {
+      logout();
+      navigate('/login');
+    }
+  };
+
+  const handleAccomplishmentsClick = () => {
+    navigate('/student/accomplishments');
+  };
 
   return (
     <header className="dashboard-header modern-glass">
@@ -21,13 +40,13 @@ const DashboardHeader = () => {
             className="profile-pic"
           />
           <div className="profile-options">
-            <div className="profile-option">
+            <div className="profile-option" onClick={handleAccomplishmentsClick} style={{ cursor: 'pointer' }}>
               <span role="img" aria-label="accomplishments">📋</span> Accomplishments
             </div>
-            <div className="profile-option">
+            <div className="profile-option" onClick={handlePurchasesClick} style={{ cursor: 'pointer' }}>
               <span role="img" aria-label="purchases">🛒</span> My purchases
             </div>
-            <div className="profile-option" onClick={logout} style={{ cursor: 'pointer' }}>
+            <div className="profile-option" onClick={handleLogoutClick} style={{ cursor: 'pointer' }}>
               <span role="img" aria-label="logout">↗️</span> Logout
             </div>
           </div>

@@ -1,0 +1,26 @@
+.forbidden-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  text-align: center;
+  background-color: #f7f7f7;
+}
+
+.forbidden-image {
+  width: 300px; /* Adjust size as needed */
+  margin-bottom: 20px;
+}
+
+.forbidden-text {
+  font-size: 28px;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.forbidden-subtext {
+  font-size: 18px;
+  color: #666;
+} 

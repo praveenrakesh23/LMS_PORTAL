@@ -48,7 +48,7 @@ const LessonPage = () => {
         <div className="cm-lesson-content-card">
           <h2 className="cm-lesson-title">{lesson.title}</h2>
           <div className="cm-lesson-video-player">
-            <video controls width="100%" height="auto">
+            <video controls width="100%" height="auto" controlsList="nodownload" oncontextmenu="return false;">
               <source src={lesson.videoUrl} type="video/mp4" />
               Your browser does not support the video tag.
             </video>

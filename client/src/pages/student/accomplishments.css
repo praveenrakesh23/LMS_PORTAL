@@ -1,0 +1,199 @@
+.ac-root {
+  min-height: 100vh;
+  background: #f7f7f7; /* Light gray background */
+}
+
+.ac-content-row {
+  display: flex;
+  max-width: 1200px; /* Match other main content areas */
+  margin: 32px auto 0 auto; /* Center below header */
+  gap: 32px; /* Space for back button area */
+}
+
+.ac-back-button-container {
+  min-width: 220px; /* Allocate space similar to sidebar */
+  padding: 0 16px; /* Padding */
+}
+
+.ac-back-button {
+  background: none;
+  border: none;
+  color: #64748b; /* Gray color */
+  font-size: 1rem;
+  cursor: pointer;
+  font-weight: 500;
+  padding: 0;
+  transition: color 0.2s;
+}
+
+.ac-back-button:hover {
+  color: #222; /* Darker gray on hover */
+}
+
+.ac-main {
+  flex: 1;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 12px #eee;
+  padding: 32px;
+  /* Adjust padding for smaller screens if needed */
+}
+
+.ac-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 24px;
+  color: #222;
+}
+
+.ac-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 400px; /* Adjust height as needed */
+  text-align: center;
+}
+
+.ac-empty-image {
+  width: 250px; /* Adjust size as needed */
+  margin-bottom: 20px;
+}
+
+.ac-empty-text {
+  font-size: 24px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.ac-empty-subtext {
+  font-size: 16px;
+  color: #666;
+}
+
+/* Basic styling for accomplishments list items (optional, based on dummy data structure) */
+.ac-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.ac-item-card {
+  background: #f8fafc;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(30,41,59,0.07);
+  padding: 18px 24px;
+}
+
+.ac-item-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #222;
+}
+
+.ac-item-date {
+  font-size: 0.95rem;
+  color: #64748b;
+  margin-top: 4px;
+}
+
+/* Styling for the accomplishments table */
+.ac-table-container {
+  overflow-x: auto; /* Add scroll on smaller screens if needed */
+}
+
+.ac-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  border-radius: 10px;
+  overflow: hidden; /* Ensures rounded corners work with collapsed borders */
+  box-shadow: 0 2px 12px #eee;
+}
+
+.ac-table th,
+.ac-table td {
+  padding: 16px 24px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.ac-table th {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #64748b; /* Header text color */
+  background-color: #f8fafc; /* Light background for header */
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.ac-table tbody tr:last-child td {
+  border-bottom: none; /* No border for the last row */
+}
+
+.ac-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 6px; /* Slightly rounded corners for badges */
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* Badge colors based on the image */
+.ac-badge-top,
+.ac-badge-merit {
+  background-color: #d2f7d2; /* Light green */
+  color: #1e801e; /* Dark green */
+}
+
+.ac-badge-passed {
+  background-color: #ffe7c2; /* Light orange */
+  color: #c7511f; /* Dark orange */
+}
+
+/* Ensure grade badge color is based on logic in JSX */
+.ac-badge-merit[class*="ac-badge-"] {
+    background-color: #d2f7d2; /* Light green */
+    color: #1e801e; /* Dark green */
+}
+
+.ac-badge-passed[class*="ac-badge-"] {
+    background-color: #ffe7c2; /* Light orange */
+    color: #c7511f; /* Dark orange */
+}
+
+/* Adjustments for the 'Completed on' column */
+.ac-table td:nth-child(3) {
+  font-size: 0.95rem;
+  color: #64748b;
+  line-height: 1.4;
+}
+
+/* Hide the original list item styles */
+.ac-list {
+    display: none; /* Hide the old list format */
+}
+
+.ac-item-card {
+    display: none; /* Hide the old list item cards */
+}
+
+/* Responsive adjustments for layout */
+@media (max-width: 900px) {
+  .ac-content-row {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .ac-back-button-container {
+    min-width: 0;
+    padding: 16px;
+    text-align: left;
+  }
+
+  .ac-main {
+    padding: 16px;
+  }
+} 

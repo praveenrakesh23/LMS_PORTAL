@@ -67,6 +67,10 @@ body {
   background: #fff;
 }
 
+.cm-sidebar li:hover {
+  background: #e7f3ffc3;
+}
+
 .cm-main {
   flex: 1;
   background: #fff;
@@ -224,9 +228,27 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: 48px;
-  margin-bottom: 48px;
+  height: 400px;
+  text-align: center;
 }
+
+.no-announcements-image {
+  width: 250px;
+  margin-bottom: 20px;
+}
+
+.no-announcements-text {
+  font-size: 24px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.no-announcements-subtext {
+  font-size: 16px;
+  color: #666;
+}
+
 .cm-sidebar-mycourses {
   color: #2563eb;
   font-weight: 600;

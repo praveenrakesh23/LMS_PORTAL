@@ -94,8 +94,8 @@ function Login() {
 
           <div className="login-card">
             <div className="login-content">
-              <h2 className="login-title">Welcome Back</h2>
-              <p className="login-subtitle">Please sign in to your account</p>
+              <h2 className="login-title">Login</h2>
+              <p className="login-subtitle">Prepare yourself for a future full of stars</p>
 
               <form onSubmit={handleSubmit} className="login-form">
                 <div className="form-group">

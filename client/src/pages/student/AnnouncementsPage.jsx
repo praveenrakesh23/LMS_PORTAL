@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import DashboardHeader from '../../components/DashboardHeader';
 import CourseSidebar from '../../components/CourseSidebar';
 import './course-modules.css'; // Reuse styles
+import NoNetworkImage from '../../assets/no-network.png'; // Assuming you save the image as no-network.png in assets
 
 const dummyAnnouncementsData = {
   sidebar: [
@@ -12,16 +13,7 @@ const dummyAnnouncementsData = {
     { label: 'Grades' },
   ],
   announcements: [
-    {
-      title: 'Welcome to the course!',
-      date: '2024-06-01',
-      content: 'We are excited to have you on board. Please check the modules section to get started.'
-    },
-    {
-      title: 'Live Q&A Session',
-      date: '2024-06-05',
-      content: 'Join us for a live Q&A session this Friday at 5 PM.'
-    }
+    
   ]
 };
 
@@ -30,8 +22,9 @@ const Announcements = ({ announcements }) => (
     <h2 className="cm-title"><span className="cm-title-bar"></span>Announcements</h2>
     {announcements.length === 0 ? (
       <div className="cm-no-announcements">
-        <img src="https://cdn-icons-png.flaticon.com/512/4076/4076549.png" alt="No Announcements" style={{ width: 120, margin: '32px auto 16px auto', display: 'block', opacity: 0.7 }} />
-        <div style={{ textAlign: 'center', color: '#64748b', fontSize: '1.1rem' }}>No announcements yet</div>
+        <img src={NoNetworkImage} alt="No Network" className="no-announcements-image" />
+        <div className="no-announcements-text">No Announcements!</div>
+        <div className="no-announcements-subtext">Nothing new for now, but stay tuned — updates are on the way!</div>
       </div>
     ) : (
       <div className="cm-announcement-list">
