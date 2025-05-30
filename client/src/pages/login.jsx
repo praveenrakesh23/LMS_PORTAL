@@ -7,6 +7,7 @@ import toast from 'react-hot-toast';
 import { AuthContext } from '../AuthContext';
 import { useContext } from 'react';
 
+
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -39,8 +40,7 @@ function Login() {
     setLoading(true);
 
     try {
-      // waiting for the response form AuthController.java
-      const response = await fetch('http://localhost:5000/api/login', {  
+      const response = await fetch('http://localhost:5000/api/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
@@ -49,26 +49,25 @@ function Login() {
       const data = await response.json();
 
       if (response.ok) {
-        const { token, role, user } = data;
+        const { token, role, user, message } = data;
         
         // Use the login function from AuthContext
         login(token, user);
         
-        toast.success('Login successful!');
+        toast.success(message || 'Login successful!');
         
-        // Navigate based on role
-        switch (role) {
-          case 'student':
-            navigate('/student/dashboard');
-            break;
-          case 'admin':
-            navigate('/admin/dashboard');
-            break;
-          case 'instructor':
-            navigate('/instructor/dashboard');
-            break;
-          default:
-            toast.error('Unknown user role. Please contact support.');
+        // Map the role from backend to frontend routes
+        const roleMap = {
+          'ROLE_ADMIN': 'admin',
+          'ROLE_STUDENT': 'student',
+          'ROLE_INSTRUCTOR': 'instructor'
+        };
+        
+        const mappedRole = roleMap[role];
+        if (mappedRole) {
+          navigate(`/${mappedRole}/dashboard`);
+        } else {
+          toast.error('Unknown user role. Please contact support.');
         }
       } else {
         toast.error(data.message || 'Login failed. Please try again.');
