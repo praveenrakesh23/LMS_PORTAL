@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate  } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 
-import PrivateRoute from './PrivateRoute'; // 🔒 adjust path if needed
+import PrivateRoute from './PrivateRoute';
 import Login from './pages/login';
 import StudentDashboard from './pages/student/dashboard';
 import AdminDashboard from './pages/admin/dashboard';
@@ -24,18 +24,92 @@ function App() {
     <>
       <Router>
         <Routes>
-          <Route path="/" element={<Navigate to="/login" />} />  {/* OR <Login /> */}
+          <Route path="/" element={<Navigate to="/login" />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/courses/:id" element={<CourseDetails />} />
-          <Route path="/courses/:id/modules" element={<CourseModules />} />
-          <Route path="/courses/:id/assignments/:quizId" element={<QuizPage />} />
-          <Route path="/courses/:id/grades" element={<GradesPage />} />
-          <Route path="/courses/:id/announcements" element={<AnnouncementsPage />} />
-          <Route path="/courses/:id/assignments" element={<AssignmentsPage />} />
-          <Route path="/courses/:id/modules/:moduleId/lessons/:lessonId" element={<LessonPage />} />
+          
+          {/* Student Routes */}
+          <Route
+            path="/courses/:id"
+            element={
+              <PrivateRoute allowedRoles={['student']}>
+                <CourseDetails />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/courses/:id/modules"
+            element={
+              <PrivateRoute allowedRoles={['student']}>
+                <CourseModules />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/courses/:id/assignments/:quizId"
+            element={
+              <PrivateRoute allowedRoles={['student']}>
+                <QuizPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/courses/:id/grades"
+            element={
+              <PrivateRoute allowedRoles={['student']}>
+                <GradesPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/courses/:id/announcements"
+            element={
+              <PrivateRoute allowedRoles={['student']}>
+                <AnnouncementsPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/courses/:id/assignments"
+            element={
+              <PrivateRoute allowedRoles={['student']}>
+                <AssignmentsPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/courses/:id/modules/:moduleId/lessons/:lessonId"
+            element={
+              <PrivateRoute allowedRoles={['student']}>
+                <LessonPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/student/dashboard"
+            element={
+              <PrivateRoute allowedRoles={['student']}>
+                <StudentDashboard />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/student/MyPurchasesPage"
+            element={
+              <PrivateRoute allowedRoles={['student']}>
+                <MyPurchasesPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/student/accomplishments"
+            element={
+              <PrivateRoute allowedRoles={['student']}>
+                <AccomplishmentsPage />
+              </PrivateRoute>
+            }
+          />
 
-          <Route path="/student/dashboard" element={<StudentDashboard />} />
-
+          {/* Admin Routes */}
           <Route
             path="/admin/dashboard"
             element={
@@ -45,6 +119,7 @@ function App() {
             }
           />
 
+          {/* Instructor Routes */}
           <Route
             path="/instructor/dashboard"
             element={
@@ -53,9 +128,6 @@ function App() {
               </PrivateRoute>
             }
           />
-
-          <Route path="/student/MyPurchasesPage" element={<MyPurchasesPage />} />
-          <Route path="/student/accomplishments" element={<AccomplishmentsPage />} />
 
           {/* Catch all route for 404 */}
           <Route path="*" element={<NotFound />} />

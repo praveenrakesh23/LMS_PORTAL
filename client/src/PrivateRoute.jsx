@@ -1,11 +1,19 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 import { AuthContext } from './AuthContext';
 import Forbidden from './pages/Forbidden';
 
+// Dummy tokens for development
+const DUMMY_TOKENS = {
+  'student-token-123': 'student',
+  'admin-token-456': 'admin',
+  'instructor-token-789': 'instructor'
+};
+
 const PrivateRoute = ({ children, allowedRoles = [] }) => {
-  const { token, user } = useContext(AuthContext);
+  const { token, user, isAuthenticated } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(true);
+  const location = useLocation();
 
   useEffect(() => {
     // Simulate checking authentication status
@@ -25,9 +33,18 @@ const PrivateRoute = ({ children, allowedRoles = [] }) => {
     );
   }
 
-  if (!token || !user) {
-    // Not logged in
-    return <Navigate to="/login" replace />;
+  // Check for dummy tokens first
+  if (token && DUMMY_TOKENS[token]) {
+    const dummyRole = DUMMY_TOKENS[token];
+    if (allowedRoles.length === 0 || allowedRoles.includes(dummyRole)) {
+      return children;
+    }
+    return <Forbidden />;
+  }
+
+  if (!isAuthenticated || !token || !user) {
+    // Not logged in - redirect to login with return path
+    return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
   if (allowedRoles.length > 0 && !allowedRoles.includes(user.role)) {

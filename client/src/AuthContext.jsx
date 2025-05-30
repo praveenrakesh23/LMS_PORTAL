@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { jwtDecode } from 'jwt-decode';
+import { useNavigate } from 'react-router-dom';
 
 export const AuthContext = createContext();
 
@@ -21,6 +22,13 @@ const deleteCookie = (name) => {
   document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/`;
 };
 
+// Dummy tokens for development
+const DUMMY_TOKENS = {
+  'student-token-123': 'student',
+  'admin-token-456': 'admin',
+  'instructor-token-789': 'instructor'
+};
+
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(() => {
     const savedUser = getCookie('user');
@@ -29,40 +37,66 @@ export const AuthProvider = ({ children }) => {
 
   const [token, setToken] = useState(() => getCookie('token') || null);
   const [userRole, setUserRole] = useState(() => getCookie('userRole') || null);
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    const savedToken = getCookie('token');
+    const savedUser = getCookie('user');
+    return !!(savedToken && savedUser);
+  });
 
   // Logout function clears state and cookies
   const logout = () => {
     setToken(null);
     setUser(null);
     setUserRole(null);
+    setIsAuthenticated(false);
     deleteCookie('token');
     deleteCookie('user');
     deleteCookie('userRole');
+    
+    // Clear browser history and redirect to login
+    window.history.pushState(null, '', '/login');
+    window.location.reload();
   };
 
   // Login function sets state and cookies
   const login = (token, user) => {
     setToken(token);
     setUser(user);
+    setIsAuthenticated(true);
     
     // Set cookies with appropriate expiration
     setCookie('token', token, 1); // 1 day expiration
     setCookie('user', JSON.stringify(user), 1);
     
-    // Extract role from token if available
-    try {
-      const decoded = jwtDecode(token);
-      const role = decoded.role || user.role;
-      setUserRole(role);
-      setCookie('userRole', role, 1);
-    } catch (err) {
-      console.warn('Failed to decode JWT token:', err);
+    // Handle role setting
+    let role;
+    
+    // Check if it's a dummy token
+    if (DUMMY_TOKENS[token]) {
+      role = DUMMY_TOKENS[token];
+    } else {
+      // Try to extract role from token or user object
+      try {
+        const decoded = jwtDecode(token);
+        role = decoded.role || user.role;
+      } catch (err) {
+        role = user.role;
+      }
     }
+    
+    // Remove 'ROLE_' prefix if present
+    role = role.toLowerCase().replace('role_', '');
+    
+    setUserRole(role);
+    setCookie('userRole', role, 1);
+
+    // Clear browser history after successful login
+    window.history.pushState(null, '', '/');
   };
 
   // Helper function to check if user has specific role
   const hasRole = (role) => {
-    return userRole === role;
+    return userRole === role.toLowerCase();
   };
 
   // Helper function to get user ID
@@ -75,11 +109,28 @@ export const AuthProvider = ({ children }) => {
     return user?.name;
   };
 
+  // Handle browser back/forward buttons
+  useEffect(() => {
+    const handlePopState = () => {
+      if (!isAuthenticated) {
+        window.location.href = '/login';
+      }
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, [isAuthenticated]);
+
   // Auto logout timer
   useEffect(() => {
     if (!token) return;
 
     let timerId;
+
+    // Skip token expiration check for dummy tokens
+    if (DUMMY_TOKENS[token]) {
+      return;
+    }
 
     try {
       const decoded = jwtDecode(token);
@@ -113,10 +164,12 @@ export const AuthProvider = ({ children }) => {
         setUser(JSON.parse(savedUser));
         setToken(savedToken);
         setUserRole(savedRole);
+        setIsAuthenticated(true);
       } else {
         setUser(null);
         setToken(null);
         setUserRole(null);
+        setIsAuthenticated(false);
       }
     };
 
@@ -130,6 +183,7 @@ export const AuthProvider = ({ children }) => {
       user, 
       token, 
       userRole,
+      isAuthenticated,
       login, 
       logout,
       hasRole,

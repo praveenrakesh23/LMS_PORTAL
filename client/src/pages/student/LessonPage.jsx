@@ -1,7 +1,119 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import DashboardHeader from '../../components/DashboardHeader';
 import './course-modules.css'; // Reuse styles
+
+// Secure Video Player Component
+const SecureVideoPlayer = ({ videoUrl }) => {
+  const videoRef = useRef(null);
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    const container = containerRef.current;
+
+    // Prevent right-click
+    const handleContextMenu = (e) => {
+      e.preventDefault();
+      return false;
+    };
+
+    // Prevent keyboard shortcuts
+    const handleKeyDown = (e) => {
+      // Prevent common keyboard shortcuts
+      if (
+        (e.ctrlKey || e.metaKey) && (
+          e.key === 's' || // Save
+          e.key === 'c' || // Copy
+          e.key === 'v' || // Paste
+          e.key === 'u'    // View source
+        )
+      ) {
+        e.preventDefault();
+        return false;
+      }
+    };
+
+    // Prevent drag and drop
+    const handleDragStart = (e) => {
+      e.preventDefault();
+      return false;
+    };
+
+    // Prevent selection
+    const handleSelectStart = (e) => {
+      e.preventDefault();
+      return false;
+    };
+
+    // Add event listeners
+    video.addEventListener('contextmenu', handleContextMenu);
+    video.addEventListener('keydown', handleKeyDown);
+    video.addEventListener('dragstart', handleDragStart);
+    video.addEventListener('selectstart', handleSelectStart);
+    container.addEventListener('contextmenu', handleContextMenu);
+    container.addEventListener('keydown', handleKeyDown);
+    container.addEventListener('dragstart', handleDragStart);
+    container.addEventListener('selectstart', handleSelectStart);
+
+    // Disable picture-in-picture
+    if (video.requestPictureInPicture) {
+      video.disablePictureInPicture = true;
+    }
+
+    // Disable fullscreen
+    if (video.requestFullscreen) {
+      video.disableFullscreen = true;
+    }
+
+    // Add watermark
+    const watermark = document.createElement('div');
+    watermark.style.position = 'absolute';
+    watermark.style.bottom = '10px';
+    watermark.style.right = '10px';
+    watermark.style.color = 'rgba(255, 255, 255, 0.7)';
+    watermark.style.fontSize = '14px';
+    watermark.style.pointerEvents = 'none';
+    watermark.style.zIndex = '1000';
+    watermark.textContent = '© NexaGenisis';
+    container.appendChild(watermark);
+
+    return () => {
+      // Remove event listeners
+      video.removeEventListener('contextmenu', handleContextMenu);
+      video.removeEventListener('keydown', handleKeyDown);
+      video.removeEventListener('dragstart', handleDragStart);
+      video.removeEventListener('selectstart', handleSelectStart);
+      container.removeEventListener('contextmenu', handleContextMenu);
+      container.removeEventListener('keydown', handleKeyDown);
+      container.removeEventListener('dragstart', handleDragStart);
+      container.removeEventListener('selectstart', handleSelectStart);
+      container.removeChild(watermark);
+    };
+  }, []);
+
+  return (
+    <div 
+      ref={containerRef} 
+      className="secure-video-container"
+      style={{ position: 'relative', width: '100%', backgroundColor: '#000' }}
+    >
+      <video
+        ref={videoRef}
+        controls
+        width="100%"
+        height="auto"
+        controlsList="nodownload nofullscreen noremoteplayback"
+        disablePictureInPicture
+        style={{ pointerEvents: 'auto' }}
+        onContextMenu={(e) => e.preventDefault()}
+      >
+        <source src={videoUrl} type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+    </div>
+  );
+};
 
 const dummyLessonData = {
   id: 'lesson-1',
@@ -48,10 +160,7 @@ const LessonPage = () => {
         <div className="cm-lesson-content-card">
           <h2 className="cm-lesson-title">{lesson.title}</h2>
           <div className="cm-lesson-video-player">
-            <video controls width="100%" height="auto" controlsList="nodownload" oncontextmenu="return false;">
-              <source src={lesson.videoUrl} type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
+            <SecureVideoPlayer videoUrl={lesson.videoUrl} />
           </div>
           <div className="cm-lesson-transcript">
             <h3>Transcript</h3>

@@ -41,8 +41,13 @@
 .logo-text {
   font-size: 1.2rem;
   font-weight: 600;
-  color: #1a202c;
+  color: #1a202c
 }
+.pur{
+  height: 30px; width: 30px;}
+.Acc{height: 30px; width: 30px;}
+.logout{height: 30px; width: 30px;}
+
 .dashboard-profile {
   display: flex;
   align-items: center;

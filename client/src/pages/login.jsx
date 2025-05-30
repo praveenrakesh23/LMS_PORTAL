@@ -2,11 +2,32 @@ import React, { useState } from 'react';
 import './login-style.css';
 import GradCapIcon from '../assets/login/login_grad_cap.svg';
 import { Eye, EyeOff } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { AuthContext } from '../AuthContext';
 import { useContext } from 'react';
 
+// Dummy credentials for testing
+const DUMMY_USERS = {
+  'student@example.com': {
+    password: 'student123',
+    role: 'ROLE_STUDENT',
+    name: 'John Student',
+    token: 'student-token-123'
+  },
+  'admin@example.com': {
+    password: 'admin123',
+    role: 'ROLE_ADMIN',
+    name: 'Admin User',
+    token: 'admin-token-456'
+  },
+  'instructor@example.com': {
+    password: 'instructor123',
+    role: 'ROLE_INSTRUCTOR',
+    name: 'Sarah Instructor',
+    token: 'instructor-token-789'
+  }
+};
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -14,6 +35,7 @@ function Login() {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
   const { login } = useContext(AuthContext);
 
   const validateInputs = () => {
@@ -40,6 +62,36 @@ function Login() {
     setLoading(true);
 
     try {
+      // Check for dummy credentials first
+      const dummyUser = DUMMY_USERS[email];
+      if (dummyUser) {
+        if (dummyUser.password === password) {
+          // Create a user object with the role
+          const userData = {
+            email,
+            name: dummyUser.name,
+            role: dummyUser.role.toLowerCase().replace('role_', '') // Convert ROLE_STUDENT to student
+          };
+          
+          // Use the login function from AuthContext
+          login(dummyUser.token, userData);
+          
+          toast.success('Login successful!');
+          
+          // Always redirect to dashboard after fresh login
+          navigate(`/${userData.role}/dashboard`, { replace: true });
+        } else {
+          toast.error('Invalid password. Please try again.');
+        }
+        setLoading(false);
+        return;
+      } else {
+        toast.error('Invalid email or username. Please try again.');
+        setLoading(false);
+        return;
+      }
+
+      // If not a dummy user, proceed with API call
       const response = await fetch('http://localhost:5000/api/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -56,24 +108,19 @@ function Login() {
         
         toast.success(message || 'Login successful!');
         
-        // Map the role from backend to frontend routes
-        const roleMap = {
-          'ROLE_ADMIN': 'admin',
-          'ROLE_STUDENT': 'student',
-          'ROLE_INSTRUCTOR': 'instructor'
-        };
-        
-        const mappedRole = roleMap[role];
-        if (mappedRole) {
-          navigate(`/${mappedRole}/dashboard`);
-        } else {
-          toast.error('Unknown user role. Please contact support.');
-        }
+        // Always redirect to dashboard after fresh login
+        navigate(`/${role.toLowerCase()}/dashboard`, { replace: true });
       } else {
-        toast.error(data.message || 'Login failed. Please try again.');
+        // Show the specific error message from the server
+        toast.error(data.message || 'Invalid email or password. Please try again.');
       }
     } catch (err) {
-      toast.error('Network error. Please check your connection.');
+      // Only show network error for actual network issues
+      if (err.name === 'TypeError' && err.message === 'Failed to fetch') {
+        toast.error('Network error. Please check your connection.');
+      } else {
+        toast.error('An unexpected error occurred. Please try again.');
+      }
     } finally {
       setLoading(false);
     }
