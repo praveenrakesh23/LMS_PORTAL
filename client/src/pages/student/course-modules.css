@@ -266,17 +266,115 @@ body {
   outline: none;
 }
 
-@media (max-width: 900px) {
+/* Responsive styles */
+@media (max-width: 1200px) {
+  .cm-content-row {
+    padding: 0 24px;
+  }
+  
+  .cm-main {
+    padding: 24px 24px 20px 24px;
+  }
+}
+
+@media (max-width: 992px) {
+  .cm-content-row {
+    padding: 0 20px;
+  }
+  
+  .cm-sidebar {
+    min-width: 200px;
+  }
+  
+  .cm-main {
+    padding: 20px 20px 16px 20px;
+  }
+  
+  .cm-title {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .cm-header {
+    padding: 16px 16px 0 16px;
+  }
+  
   .cm-content-row {
     flex-direction: column;
     gap: 0;
+    padding: 0 16px;
   }
+  
   .cm-sidebar {
     min-width: 0;
-    margin-bottom: 18px;
+    margin-bottom: 16px;
   }
+  
   .cm-main {
-    padding: 18px 6px 18px 6px;
+    padding: 16px 16px 12px 16px;
+  }
+  
+  .cm-module-card {
+    padding: 16px 20px;
+  }
+  
+  .cm-lesson-row {
+    padding: 8px 12px;
+  }
+  
+  .cm-assignment-row {
+    flex-direction: column;
+    gap: 8px;
+    padding: 12px;
+  }
+  
+  .cm-assignment-title {
+    min-width: 0;
+  }
+  
+  .cm-assignment-meta {
+    min-width: 0;
+    margin-right: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .cm-header {
+    padding: 12px 12px 0 12px;
+  }
+  
+  .cm-content-row {
+    padding: 0 12px;
+  }
+  
+  .cm-main {
+    padding: 12px 12px 8px 12px;
+  }
+  
+  .cm-title {
+    font-size: 1.1rem;
+  }
+  
+  .cm-module-card {
+    padding: 14px 16px;
+  }
+  
+  .cm-module-title {
+    font-size: 1rem;
+  }
+  
+  .cm-lesson-row {
+    font-size: 0.9rem;
+  }
+  
+  .cm-lesson-desc {
+    font-size: 0.9rem;
+  }
+  
+  .cm-nav-btn {
+    padding: 6px 20px;
+    font-size: 0.9rem;
   }
 }
 

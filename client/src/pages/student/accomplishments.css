@@ -196,4 +196,113 @@
   .ac-main {
     padding: 16px;
   }
+}
+
+/* Responsive styles */
+@media (max-width: 1200px) {
+  .accomplishments-container {
+    padding: 24px;
+  }
+  
+  .accomplishments-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+}
+
+@media (max-width: 992px) {
+  .accomplishments-container {
+    padding: 20px;
+  }
+  
+  .accomplishments-title {
+    font-size: 1.8rem;
+  }
+  
+  .accomplishment-card {
+    padding: 20px;
+  }
+  
+  .accomplishment-title {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .accomplishments-container {
+    padding: 16px;
+  }
+  
+  .accomplishments-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  
+  .accomplishments-title {
+    font-size: 1.6rem;
+  }
+  
+  .accomplishment-card {
+    padding: 16px;
+  }
+  
+  .accomplishment-title {
+    font-size: 1rem;
+  }
+  
+  .accomplishment-date {
+    font-size: 0.9rem;
+  }
+
+  .ac-table th,
+  .ac-table td {
+    padding: 12px 16px; /* Reduced padding for smaller screens */
+    font-size: 0.9rem; /* Smaller font size */
+  }
+
+  .ac-table th {
+    letter-spacing: 0.2px;
+  }
+
+  .ac-badge {
+    padding: 3px 8px;
+    font-size: 0.8rem;
+  }
+
+  .ac-table td:nth-child(3) {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .accomplishments-container {
+    padding: 12px;
+  }
+  
+  .accomplishments-title {
+    font-size: 1.4rem;
+  }
+  
+  .accomplishment-card {
+    padding: 14px;
+  }
+  
+  .accomplishment-title {
+    font-size: 0.95rem;
+  }
+  
+  .accomplishment-date {
+    font-size: 0.85rem;
+  }
+
+  .ac-table th,
+  .ac-table td {
+    padding: 10px 12px; /* Further reduced padding for very small screens */
+    font-size: 0.8rem;
+  }
+
+  .ac-badge {
+    padding: 2px 6px;
+    font-size: 0.75rem;
+  }
 } 

@@ -253,20 +253,115 @@ body {
   font-size: 1.2rem;
 }
 
-@media (max-width: 900px) {
+/* Responsive styles */
+@media (max-width: 1200px) {
   .cd-container {
-    padding: 18px 8px 24px 8px;
+    margin: 24px auto;
+    padding: 24px 32px 32px 32px;
   }
-  .cd-title-row, .cd-main-row {
-    flex-direction: column;
-    gap: 18px;
+  
+  .cd-title {
+    font-size: 2.2rem;
   }
+}
+
+@media (max-width: 992px) {
+  .cd-container {
+    margin: 20px auto;
+    padding: 20px 24px 24px 24px;
+  }
+  
+  .cd-title {
+    font-size: 2rem;
+  }
+  
   .cd-main-cards {
     grid-template-columns: 1fr;
   }
+  
   .cd-skills-card {
     max-width: 100%;
-    min-width: 0;
-    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .cd-container {
+    margin: 16px auto;
+    padding: 16px 20px 20px 20px;
+  }
+  
+  .cd-title {
+    font-size: 1.8rem;
+  }
+  
+  .cd-subtitle {
+    font-size: 1rem;
+  }
+  
+  .cd-desc {
+    font-size: 0.95rem;
+  }
+  
+  .cd-stat-card {
+    padding: 14px 16px;
+    font-size: 0.95rem;
+  }
+  
+  .cd-main-card {
+    padding: 16px 18px;
+  }
+  
+  .cd-main-card b {
+    font-size: 1rem;
+  }
+  
+  .cd-continue-btn {
+    padding: 12px 36px;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .cd-container {
+    margin: 12px auto;
+    padding: 12px 16px 16px 16px;
+  }
+  
+  .cd-title {
+    font-size: 1.6rem;
+  }
+  
+  .cd-subtitle {
+    font-size: 0.95rem;
+  }
+  
+  .cd-desc {
+    font-size: 0.9rem;
+  }
+  
+  .cd-stat-card {
+    padding: 12px 14px;
+    font-size: 0.9rem;
+  }
+  
+  .cd-main-card {
+    padding: 14px 16px;
+  }
+  
+  .cd-main-card b {
+    font-size: 0.95rem;
+  }
+  
+  .cd-continue-btn {
+    padding: 10px 32px;
+    font-size: 0.95rem;
+  }
+  
+  .cd-learn-row h2 {
+    font-size: 1.2rem;
+  }
+  
+  .cd-learn-row li {
+    font-size: 0.95rem;
   }
 } 

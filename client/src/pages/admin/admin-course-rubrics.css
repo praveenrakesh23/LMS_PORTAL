@@ -1,0 +1,39 @@
+.admin-rubrics-container {
+  padding: 24px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+}
+
+.admin-rubrics-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #222;
+  margin-bottom: 12px;
+}
+
+.admin-rubrics-description {
+  font-size: 1rem;
+  color: #64748b;
+  margin-bottom: 24px;
+}
+
+.admin-rubrics-content {
+  margin-top: 20px;
+  /* Add styling for rubrics display if needed */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .admin-rubrics-container {
+    padding: 16px;
+  }
+
+  .admin-rubrics-title {
+    font-size: 1.6rem;
+  }
+
+  .admin-rubrics-description {
+    font-size: 0.9rem;
+  }
+} 

@@ -23,4 +23,38 @@
 .forbidden-subtext {
   font-size: 18px;
   color: #666;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .forbidden-container {
+    padding: 24px;
+  }
+  
+  .forbidden-title {
+    font-size: 2rem;
+  }
+  
+  .forbidden-message {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .forbidden-container {
+    padding: 16px;
+  }
+  
+  .forbidden-title {
+    font-size: 1.8rem;
+  }
+  
+  .forbidden-message {
+    font-size: 1rem;
+  }
+  
+  .forbidden-btn {
+    padding: 10px 20px;
+    font-size: 0.95rem;
+  }
 } 

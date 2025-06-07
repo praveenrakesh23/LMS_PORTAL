@@ -1,0 +1,103 @@
+.admin-sidebar {
+  background: none;
+  min-width: 220px;
+  padding: 0;
+}
+
+.admin-sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.admin-sidebar li {
+  padding: 12px 0 12px 8px;
+  font-size: 1.08rem;
+  color: #64748b;
+  border-left: 3px solid transparent;
+  cursor: pointer;
+  margin-bottom: 6px;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.admin-sidebar li.active {
+  color: #2563eb;
+  font-weight: 600;
+  border-left: 3px solid #2563eb;
+  background: #fff;
+}
+
+.admin-sidebar li:hover {
+  background: #e7f3ffc3;
+}
+
+.admin-sidebar a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Responsive adjustments for AdminSideMenubar */
+@media (max-width: 900px) {
+  .admin-sidebar {
+    min-width: unset;
+    width: 100%;
+    padding: 0 16px;
+  }
+
+  .admin-sidebar ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 8px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+  }
+
+  .admin-sidebar li {
+    font-size: 0.95rem;
+    padding: 8px 12px;
+    border-left: none;
+    border-bottom: 3px solid transparent;
+    margin-bottom: 0;
+    border-radius: 6px;
+    white-space: nowrap;
+  }
+
+  .admin-sidebar li.active {
+    border-left: none;
+    border-bottom: 3px solid #2563eb;
+    background: rgba(37, 99, 235, 0.1);
+  }
+
+  .admin-sidebar li:hover {
+    background: rgba(37, 99, 235, 0.05);
+    border-bottom-color: #2563eb;
+  }
+}
+
+@media (max-width: 600px) {
+  .admin-sidebar ul {
+    justify-content: center;
+    gap: 6px;
+  }
+
+  .admin-sidebar li {
+    font-size: 0.85rem;
+    padding: 6px 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-sidebar {
+    padding: 0 12px;
+  }
+
+  .admin-sidebar ul {
+    gap: 4px;
+  }
+
+  .admin-sidebar li {
+    font-size: 0.8rem;
+    padding: 5px 8px;
+  }
+} 

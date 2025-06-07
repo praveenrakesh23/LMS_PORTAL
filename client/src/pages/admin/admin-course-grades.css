@@ -1,0 +1,39 @@
+.admin-grades-container {
+  padding: 24px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+}
+
+.admin-grades-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #222;
+  margin-bottom: 12px;
+}
+
+.admin-grades-description {
+  font-size: 1rem;
+  color: #64748b;
+  margin-bottom: 24px;
+}
+
+.admin-grades-content {
+  margin-top: 20px;
+  /* Add styling for grades display if needed */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .admin-grades-container {
+    padding: 16px;
+  }
+
+  .admin-grades-title {
+    font-size: 1.6rem;
+  }
+
+  .admin-grades-description {
+    font-size: 0.9rem;
+  }
+} 

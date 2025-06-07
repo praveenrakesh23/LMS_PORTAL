@@ -12,12 +12,12 @@
   transition: transform 0.15s;
 }
 
-
 .modern-profile {
   transition: box-shadow 0.15s;
   border-radius: 12px;
   padding: 4px 10px 4px 10px;
 }
+
 .modern-profile:hover {
   box-shadow: 0 2px 12px #e0e7ff;
   background: rgba(240, 245, 255, 0.5);
@@ -29,24 +29,30 @@
   align-items: center;
   padding: 24px 40px 0 40px;
   background-color: rgb(255, 255, 255);
+  position: relative;
+  z-index: 1001;
 }
+
 .dashboard-logo {
   display: flex;
   align-items: center;
   gap: 10px;
 }
+
 .logo-icon {
   font-size: 2rem;
 }
+
 .logo-text {
   font-size: 1.2rem;
   font-weight: 600;
-  color: #1a202c
+  color: #1a202c;
 }
-.pur{
-  height: 30px; width: 30px;}
-.Acc{height: 30px; width: 30px;}
-.logout{height: 30px; width: 30px;}
+
+.pur, .Acc, .logout {
+  height: 30px;
+  width: 30px;
+}
 
 .dashboard-profile {
   display: flex;
@@ -54,12 +60,14 @@
   gap: 16px;
   position: relative;
 }
+
 .dashboard-username {
   margin-right: 12px;
   font-weight: 500;
   color: #222;
   font-size: 1rem;
 }
+
 .profile-pic {
   width: 40px;
   height: 40px;
@@ -77,6 +85,7 @@
 .profile-dropdown {
   position: relative;
   cursor: pointer;
+  z-index: 1001;
 }
 
 .profile-dropdown:hover .profile-pic {
@@ -95,7 +104,7 @@
   visibility: hidden;
   transform: translateY(-10px);
   transition: all 0.2s ease;
-  z-index: 1000;
+  z-index: 1002;
 }
 
 .profile-dropdown:hover .profile-options {
@@ -127,4 +136,124 @@
 
 .profile-option span {
   font-size: 1.2rem;
+}
+
+/* Responsive styles */
+@media (max-width: 1024px) {
+  .dashboard-header {
+    padding: 20px 24px 0 24px;
+  }
+  
+  .logo-text {
+    font-size: 1.1rem;
+  }
+  
+  .dashboard-username {
+    margin-right: 8px;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-header {
+    padding: 16px 16px 0 16px;
+  }
+  
+  .logo-text {
+    font-size: 1rem;
+  }
+  
+  .grad-cap {
+    width: 28px;
+    height: 28px;
+  }
+  
+  .dashboard-username {
+    display: none;
+  }
+  
+  .profile-pic {
+    width: 36px;
+    height: 36px;
+  }
+  
+  .profile-options {
+    right: -16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard-header {
+    padding: 12px 12px 0 12px;
+  }
+  
+  .logo-text {
+    font-size: 0.9rem;
+  }
+  
+  .grad-cap {
+    width: 24px;
+    height: 24px;
+  }
+  
+  .profile-pic {
+    width: 32px;
+    height: 32px;
+  }
+  
+  .profile-options {
+    min-width: 180px;
+    right: -12px;
+  }
+  
+  .profile-option {
+    padding: 10px 12px;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .dashboard-header {
+    padding: 10px 10px 0 10px;
+  }
+  
+  .logo-text {
+    font-size: 0.85rem;
+  }
+  
+  .grad-cap {
+    width: 22px;
+    height: 22px;
+  }
+  
+  .profile-pic {
+    width: 30px;
+    height: 30px;
+  }
+  
+  .profile-options {
+    min-width: 160px;
+    right: -10px;
+  }
+  
+  .profile-option {
+    padding: 8px 10px;
+    font-size: 0.85rem;
+  }
+}
+
+.admin-nav-links a {
+  text-decoration: none;
+  color: inherit;
+  transition: color 0.2s ease, border-bottom-color 0.2s ease;
+  display: inline-block;
+  padding: 10px 0;
+  box-sizing: border-box;
+}
+
+.active-nav-link {
+  color: #2563eb !important;
+  text-decoration: none;
+  border-bottom: 3px solid #2563eb;
+  font-weight: 600;
+  padding-bottom: 7px;
 }
