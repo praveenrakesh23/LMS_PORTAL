@@ -4,30 +4,7 @@ import GradCapIcon from '../assets/login/login_grad_cap.svg';
 import { Eye, EyeOff } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import toast from 'react-hot-toast';
-import { AuthContext } from '../AuthContext';
-import { useContext } from 'react';
-
-// Dummy credentials for testing
-const DUMMY_USERS = {
-  'student@example.com': {
-    password: 'student123',
-    role: 'ROLE_STUDENT',
-    name: 'John Student',
-    token: 'student-token-123'
-  },
-  'admin@example.com': {
-    password: 'admin123',
-    role: 'ROLE_ADMIN',
-    name: 'Admin User',
-    token: 'admin-token-456'
-  },
-  'instructor@example.com': {
-    password: 'instructor123',
-    role: 'ROLE_INSTRUCTOR',
-    name: 'Sarah Instructor',
-    token: 'instructor-token-789'
-  }
-};
+import { useAuth } from '../AuthContext';
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -36,7 +13,7 @@ function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
-  const { login } = useContext(AuthContext);
+  const { login } = useAuth();
 
   const validateInputs = () => {
     if (!email || !password) {
@@ -62,65 +39,23 @@ function Login() {
     setLoading(true);
 
     try {
-      // Check for dummy credentials first
-      const dummyUser = DUMMY_USERS[email];
-      if (dummyUser) {
-        if (dummyUser.password === password) {
-          // Create a user object with the role
-          const userData = {
-            email,
-            name: dummyUser.name,
-            role: dummyUser.role.toLowerCase().replace('role_', '') // Convert ROLE_STUDENT to student
-          };
-          
-          // Use the login function from AuthContext
-          login(dummyUser.token, userData);
-          
-          toast.success('Login successful!');
-          
-          // Always redirect to dashboard after fresh login
-          navigate(`/${userData.role}/dashboard`, { replace: true });
-        } else {
-          toast.error('Invalid password. Please try again.');
-        }
-        setLoading(false);
-        return;
-      } else {
-        toast.error('Invalid email or username. Please try again.');
-        setLoading(false);
-        return;
-      }
+      const credentials = {
+        email,
+        password
+      };
 
-      // If not a dummy user, proceed with API call
-      const response = await fetch('http://localhost:5000/api/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        const { token, role, user, message } = data;
-        
-        // Use the login function from AuthContext
-        login(token, user);
-        
-        toast.success(message || 'Login successful!');
-        
-        // Always redirect to dashboard after fresh login
-        navigate(`/${role.toLowerCase()}/dashboard`, { replace: true });
-      } else {
-        // Show the specific error message from the server
-        toast.error(data.message || 'Invalid email or password. Please try again.');
-      }
+      const response = await login(credentials);
+      console.log('Login response:', response); // Debug log
+      
+      toast.success('Login successful!');
+      
+      // Redirect based on user role
+      const role = response.user.role;
+      console.log('Redirecting to:', `/${role}/dashboard`); // Debug log
+      navigate(`/${role}/dashboard`, { replace: true });
     } catch (err) {
-      // Only show network error for actual network issues
-      if (err.name === 'TypeError' && err.message === 'Failed to fetch') {
-        toast.error('Network error. Please check your connection.');
-      } else {
-        toast.error('An unexpected error occurred. Please try again.');
-      }
+      console.error('Login error:', err); // Debug log
+      toast.error(err.response?.data?.message || 'Login failed. Please try again.');
     } finally {
       setLoading(false);
     }

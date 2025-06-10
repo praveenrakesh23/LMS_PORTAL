@@ -18,10 +18,6 @@
   padding: 4px 10px 4px 10px;
 }
 
-.modern-profile:hover {
-  box-shadow: 0 2px 12px #e0e7ff;
-  background: rgba(240, 245, 255, 0.5);
-}
 
 .dashboard-header {
   display: flex;
@@ -62,7 +58,7 @@
 }
 
 .dashboard-username {
-  margin-right: 12px;
+  margin-right: 20px;
   font-weight: 500;
   color: #222;
   font-size: 1rem;

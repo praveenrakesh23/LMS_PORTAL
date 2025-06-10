@@ -2,13 +2,12 @@ import React from 'react';
 import './DashboardHeader.css'; // Reuse existing header styles for now
 import gradcap from '../assets/dashboard/login_grad_cap.svg';
 import { Link, useLocation } from 'react-router-dom';
-import { useContext } from 'react';
-import { AuthContext } from '../AuthContext';
+import { useAuth } from '../AuthContext';
 import { useNavigate } from 'react-router-dom';
 import Logout from '../assets/profile-dropdown/Logout.svg';
 
 const AdminDashboardHeader = () => {
-  const { user: currentUser, logout } = useContext(AuthContext);
+  const { user: currentUser, logout } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 

@@ -5,6 +5,7 @@ import user from '../../assets/course-card/user.svg';
 import calendar from '../../assets/course-card/calendar.svg';
 import DashboardHeader from '../../components/DashboardHeader';
 import { useNavigate } from 'react-router-dom';
+import { courseService } from '../../services/api';
 
 const Dashboard = () => {
   const [courses, setCourses] = useState([]);
@@ -16,15 +17,26 @@ const Dashboard = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    setLoading(true);
-    fetch('/src/sample-courses.json')
-      .then((res) => res.json())
-      .then((data) => {
-        setCourses(data.courses);
-        setFilteredCourses(data.courses);
-        setPagination(data.pagination);
+    const fetchCourses = async () => {
+      try {
+        setLoading(true);
+        const response = await courseService.getAllCourses();
+        setCourses(response);
+        setFilteredCourses(response);
+        setPagination({
+          page: 1,
+          pageSize: 12,
+          totalPages: Math.ceil(response.length / 12),
+          totalCourses: response.length
+        });
+      } catch (error) {
+        console.error('Error fetching courses:', error);
+      } finally {
         setLoading(false);
-      });
+      }
+    };
+
+    fetchCourses();
   }, []);
 
   useEffect(() => {
@@ -92,7 +104,7 @@ const Dashboard = () => {
                   <div className="dashboard-card-info">
                     <span className="dashboard-card-rating">
                       <img src={star} alt="star" className="icon-star" />
-                      {course.rating} <span className="dashboard-card-rating-count">({course.ratingCount})</span>
+                      {course.rating ? course.rating.toFixed(1) : '0.0'} <span className="dashboard-card-rating-count">({course.ratingCount || 0})</span>
                     </span>
                     <span className="dashboard-card-enrolled">
                       <img src={user} alt="user" className="icon-user" />

@@ -1,13 +1,14 @@
-import React, { useContext } from 'react';
-import { AuthContext } from '../AuthContext';
+import React from 'react';
+import { useAuth } from '../AuthContext';
 import './DashboardHeader.css';
 import gradcap from '../assets/dashboard/login_grad_cap.svg';
 import { useNavigate } from 'react-router-dom';
 import accomplishments from '../assets/profile-dropdown/Report Card.svg';
 import MyPurchases from '../assets/profile-dropdown/Mobile Order.svg';
 import Logout from '../assets/profile-dropdown/Logout.svg';
+
 const DashboardHeader = () => {
-  const { user: currentUser, logout } = useContext(AuthContext);
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
 
   const handlePurchasesClick = () => {
@@ -34,7 +35,7 @@ const DashboardHeader = () => {
         <span className="logo-text">Learning Management System</span>
       </div>
       <nav className="dashboard-profile modern-profile">
-        <span className="dashboard-username">{currentUser?.name || currentUser?.username || 'student'}</span>
+        <span className="dashboard-username">{user?.lastName || 'User'}</span>
         <div className="profile-dropdown">
           <img
             src="https://randomuser.me/api/portraits/men/32.jpg"
@@ -43,13 +44,13 @@ const DashboardHeader = () => {
           />
           <div className="profile-options">
             <div className="profile-option" onClick={handleAccomplishmentsClick} style={{ cursor: 'pointer' }}>
-            <img src={accomplishments} alt="accomplishments" className='Acc' /> Accomplishments
+              <img src={accomplishments} alt="accomplishments" className='Acc' /> Accomplishments
             </div>
             <div className="profile-option" onClick={handlePurchasesClick} style={{ cursor: 'pointer' }}>
-            <img src={MyPurchases} alt="purchases" className='pur' /> My purchases
+              <img src={MyPurchases} alt="purchases" className='pur' /> My purchases
             </div>
             <div className="profile-option" onClick={handleLogoutClick} style={{ cursor: 'pointer' }}>
-            <img src={Logout} alt="logout" className='logout' />  Logout
+              <img src={Logout} alt="logout" className='logout' />  Logout
             </div>
           </div>
         </div>
