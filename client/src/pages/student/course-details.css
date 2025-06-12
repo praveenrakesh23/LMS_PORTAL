@@ -414,4 +414,27 @@ body {
   .cd-learn-row li {
     font-size: 0.95rem;
   }
+}
+
+.cd-rating {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.cd-star {
+  color: #fbbf24;
+  font-size: 1.2rem;
+}
+
+.cd-rating-count {
+  color: #64748b;
+  font-size: 0.95rem;
+}
+
+.cd-stat-card span {
+  color: #64748b;
+  font-size: 0.95rem;
+  line-height: 1.4;
 } 
